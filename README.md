@@ -138,7 +138,6 @@ npm run dev
 ## 🛠 Architecture
 ```mermaid
 flowchart TD
-  flowchart TD
   subgraph Frontend[Frontend - React 19 + Tailwind]
     D[Dashboard]
     A[Analytics]
@@ -161,6 +160,7 @@ flowchart TD
   C --> DB
   O --> DB
   G --> DB
+
 
 ```
 
