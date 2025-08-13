@@ -78,6 +78,7 @@ cd PSI-QA
 ```bash
 cd Testing-App
 npm install
+node setup.js
 ```
 Create a .env file:
 ```bash
