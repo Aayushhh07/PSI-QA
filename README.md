@@ -70,8 +70,8 @@ It supports **end-to-end (E2E)** testing for multiple web applications, integrat
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/Aayushhh07/PSI-QA.git
-cd PSI-QA
+git clone https://github.com/PanScienceInnovation/Testing-App.git
+cd Testing-App
 ```
 
 ### 2️⃣ Backend Setup
