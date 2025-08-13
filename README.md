@@ -144,7 +144,7 @@ flowchart TD
     T[Test Details]
   end
 
-  subgraph Backend[Backend-Express.js + TypeScript]
+  subgraph Backend[Express.js + TypeScript]
 
 
     P[Playwright Service]
