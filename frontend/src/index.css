@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* App theme tokens */
+:root {
+  --brand-start: #0ea5e9; /* sky-500 */
+  --brand-end: #8b5cf6;   /* violet-500 */
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 antialiased;
+}
