@@ -138,19 +138,14 @@ npm run dev
 ## 🛠 Architecture
 ```mermaid
 flowchart TD
-    %% =========================
-    %% TITLE & STYLE
-    %% =========================
+    %% Styling
     classDef frontend fill:#1E90FF,stroke:#0a3d62,stroke-width:2px,color:#fff,font-weight:bold
     classDef backend fill:#20B2AA,stroke:#006666,stroke-width:2px,color:#fff,font-weight:bold
+    classDef microservices fill:#4682B4,stroke:#2F4F4F,stroke-width:1.5px,color:#fff,font-weight:bold
     classDef database fill:#FFD700,stroke:#b8860b,stroke-width:2px,color:#000,font-weight:bold
-    classDef service fill:#4682B4,stroke:#2F4F4F,stroke-width:1.5px,color:#fff,font-weight:bold
     classDef apiLink stroke-dasharray:5 5
-    classDef connector stroke:#999,stroke-width:1.5px
 
-    %% =========================
-    %% FRONTEND SECTION
-    %% =========================
+    %% FRONTEND
     subgraph FE[💻 Frontend Layer – React 19 SPA]
         D[📊 Dashboard<br><small>Real-time Test Overview</small>]
         A[📈 Analytics<br><small>Reports & Insights</small>]
@@ -158,12 +153,11 @@ flowchart TD
     end
     class FE,D,A,T frontend
 
-    %% =========================
-    %% BACKEND SECTION
-    %% =========================
+    %% BACKEND
     subgraph BE[⚙ Backend Layer – Express.js API Gateway]
-      spacer1([" "]):::backend
-        subgraph Services[🛠 Microservices Layer]
+        spacer1([" "]):::backend
+        %% MICRO SERVICES
+        subgraph MS[🛠 Microservices Layer]
             P[🎯 Playwright Service<br><small>Automated Browser Testing</small>]
             C[🧠 Choice-AI Service<br><small>AI-driven Decision Engine</small>]
             O[👁 Opticall Service<br><small>Visual/UI Regression Testing</small>]
@@ -172,23 +166,19 @@ flowchart TD
         DB[(🗄 MongoDB<br><small>Centralized Test Data Store</small>)]
     end
     class BE backend
-    class P,C,O,G service
+    class MS microservices
     class DB database
 
-    %% =========================
     %% CONNECTIONS
-    %% =========================
     D -- "Axios / REST API" --> BE
     A -- "Axios / REST API" --> BE
     T -- "Axios / REST API" --> BE
-    class D,A,T apiLink
 
-    %% Backend to Database Links
     P --> DB
     C --> DB
     O --> DB
     G --> DB
-    class P,C,O,G,DB connector
+
 
 
 
