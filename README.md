@@ -162,6 +162,7 @@ flowchart TD
     %% BACKEND SECTION
     %% =========================
     subgraph BE[⚙ Backend Layer – Express.js API Gateway]
+      spacer1([" "]):::backend
         subgraph Services[🛠 Microservices Layer]
             P[🎯 Playwright Service<br><small>Automated Browser Testing</small>]
             C[🧠 Choice-AI Service<br><small>AI-driven Decision Engine</small>]
