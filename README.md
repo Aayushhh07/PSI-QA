@@ -79,6 +79,9 @@ cd Testing-App
 cd Testing-App
 npm install
 ```
+```bash
+node server.js
+```
 Create a .env file:
 ```bash
 # Server Configuration
@@ -154,7 +157,7 @@ flowchart TD
     class FE,D,A,T frontend
 
     %% BACKEND
-    subgraph BE[⚙ Backend Layer – Express.js API Gateway]
+    subgraph BE[⚙ Backend Layer]
         spacer1([" "]):::backend
         %% MICRO SERVICES
         subgraph MS[🛠 Microservices Layer]
@@ -163,7 +166,7 @@ flowchart TD
             O[👁 Opticall Service<br><small>Visual/UI Regression Testing</small>]
             G[🔍 Generic Testing Service<br><small>API, Load, & Functional Tests</small>]
         end
-        DB[(🗄 MongoDB<br><small>Centralized Test Data Store</small>)]
+        DB[(🗄 MongoDB<br><small>Test Data Store</small>)]
     end
     class BE backend
     class MS microservices
