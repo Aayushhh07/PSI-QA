@@ -166,7 +166,7 @@ flowchart TD
             O[👁 Opticall Service<br><small>Visual/UI Regression Testing</small>]
             G[🔍 Generic Testing Service<br><small>API, Load, & Functional Tests</small>]
         end
-        DB[(🗄 MongoDB<br><small>Test Data Store</small>)]
+        DB[(MongoDB<br><small>Test Data Store</small>)]
     end
     class BE backend
     class MS microservices
