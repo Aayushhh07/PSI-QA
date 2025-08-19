@@ -1,13 +1,70 @@
 import './App.css';
 import { BrowserRouter, Routes, Route, Link, NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dashboard } from './components/Dashboard';
 import { Analytics } from './components/Analytics';
 import { About } from './components/About';
 import { TestDetails } from './components/TestDetails';
+import { Login } from './components/Login';
 
 export default function App() {
   const [open, setOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Check authentication status on app load
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  const checkAuthStatus = async () => {
+    try {
+      // Try to access a protected endpoint to check if we're authenticated
+      const response = await fetch('/api/tests/executions', {
+        credentials: 'include'
+      });
+      
+      if (response.ok) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    } catch (error) {
+      setIsAuthenticated(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = async () => {
+    setIsAuthenticated(false);
+    // Clear any session data on the server side if needed
+    try {
+      await fetch('/api/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+    } catch (error) {
+      // Logout failed, but we'll still redirect to login
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-950">
+        <div className="text-slate-300">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Login onLoginSuccess={handleLoginSuccess} />;
+  }
+
   return (
     <BrowserRouter>
       <div className="min-h-screen">
@@ -22,6 +79,12 @@ export default function App() {
               <NavLink to="/" className={({isActive})=>`px-3 py-1 rounded ${isActive?'bg-white/10':'hover:bg-white/5'}`}>Dashboard</NavLink>
               <NavLink to="/analytics" className={({isActive})=>`px-3 py-1 rounded ${isActive?'bg-white/10':'hover:bg-white/5'}`}>Analytics</NavLink>
               <NavLink to="/about" className={({isActive})=>`px-3 py-1 rounded ${isActive?'bg-white/10':'hover:bg-white/5'}`}>About</NavLink>
+              <button 
+                onClick={handleLogout}
+                className="px-3 py-1 rounded bg-rose-600/80 hover:bg-rose-600 text-white transition-colors"
+              >
+                Logout
+              </button>
             </div>
             {/* Hamburger */}
             <button className="sm:hidden inline-flex items-center justify-center rounded-md p-2 hover:bg-white/10" aria-label="Open menu" onClick={()=>setOpen(o=>!o)}>
@@ -37,6 +100,15 @@ export default function App() {
                 <NavLink onClick={()=>setOpen(false)} to="/" className={({isActive})=>`px-3 py-2 rounded ${isActive?'bg-white/10':'hover:bg-white/5'}`}>Dashboard</NavLink>
                 <NavLink onClick={()=>setOpen(false)} to="/analytics" className={({isActive})=>`px-3 py-2 rounded ${isActive?'bg-white/10':'hover:bg-white/5'}`}>Analytics</NavLink>
                 <NavLink onClick={()=>setOpen(false)} to="/about" className={({isActive})=>`px-3 py-2 rounded ${isActive?'bg-white/10':'hover:bg-white/5'}`}>About</NavLink>
+                <button 
+                  onClick={() => {
+                    setOpen(false);
+                    handleLogout();
+                  }}
+                  className="px-3 py-2 rounded bg-rose-600/80 hover:bg-rose-600 text-white transition-colors text-left"
+                >
+                  Logout
+                </button>
               </div>
             </div>
           )}
