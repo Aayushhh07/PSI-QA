@@ -7,7 +7,7 @@ type HistoryItem = {
   summary: { totalTests: number; passed: number; failed: number; successRate: number; averageDuration: number };
 };
 
-async function fetchHistory(site: 'choice-ai' | 'opticall') {
+async function fetchHistory(site: 'choice-ai' | 'opticall' | 'nyaay-ai') {
   const res = await fetch(`/api/${site}/e2e/history`);
   const json = await res.json();
   return (json.data?.tests || []) as HistoryItem[];
@@ -16,10 +16,12 @@ async function fetchHistory(site: 'choice-ai' | 'opticall') {
 export function Analytics() {
   const [choice, setChoice] = useState<HistoryItem[]>([]);
   const [optic, setOptic] = useState<HistoryItem[]>([]);
+  const [nyaay, setNyaay] = useState<HistoryItem[]>([]);
 
   useEffect(() => {
     fetchHistory('choice-ai').then(setChoice).catch(()=>{});
     fetchHistory('opticall').then(setOptic).catch(()=>{});
+    fetchHistory('nyaay-ai').then(setNyaay).catch(()=>{});
   }, []);
 
   const toChart = (arr: HistoryItem[]) =>
@@ -91,6 +93,37 @@ export function Analytics() {
                   <Tooltip />
                   <Legend />
                   <Bar dataKey="duration" fill="#a78bfa" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </section>
+
+        <section className="rounded-2xl bg-slate-900/60 p-6 ring-1 ring-white/10">
+          <h2 className="font-medium">Nyaay AI</h2>
+          <div className="mt-4 grid gap-6 lg:grid-cols-2">
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={toChart(nyaay)}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                  <XAxis dataKey="date" tick={{ fill: '#94a3b8' }} />
+                  <YAxis tick={{ fill: '#94a3b8' }} />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="passed" stroke="#22c55e" />
+                  <Line type="monotone" dataKey="failed" stroke="#ef4444" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={toChart(nyaay)}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                  <XAxis dataKey="date" tick={{ fill: '#94a3b8' }} />
+                  <YAxis tick={{ fill: '#94a3b8' }} />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="duration" fill="#f97316" />
                 </BarChart>
               </ResponsiveContainer>
             </div>

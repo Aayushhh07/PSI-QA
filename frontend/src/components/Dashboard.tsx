@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-type SiteKey = 'choice-ai' | 'opticall';
+type SiteKey = 'choice-ai' | 'opticall' | 'nyaay-ai';
 
 type ApiResponse<T = any> = {
   success: boolean;
@@ -42,17 +42,28 @@ type HistoryItem = {
 const API_BASE = '/api';
 
 function siteMeta(site: SiteKey) {
-  return site === 'choice-ai'
-    ? {
+  switch (site) {
+    case 'choice-ai':
+      return {
         name: 'Choice-AI',
         endpoint: `${API_BASE}/choice-ai/e2e`,
         history: `${API_BASE}/choice-ai/e2e/history`,
-      }
-    : {
+      };
+    case 'opticall':
+      return {
         name: 'OpticAll',
         endpoint: `${API_BASE}/opticall/e2e`,
         history: `${API_BASE}/opticall/e2e/history`,
       };
+    case 'nyaay-ai':
+      return {
+        name: 'Nyaay AI',
+        endpoint: `${API_BASE}/nyaay-ai/e2e`,
+        history: `${API_BASE}/nyaay-ai/e2e/history`,
+      };
+    default:
+      throw new Error(`Unknown site: ${site}`);
+  }
 }
 
 export function Dashboard() {
@@ -125,7 +136,7 @@ export function Dashboard() {
         </h1>
       </header>
 
-      <section className="mt-8 grid gap-6 sm:grid-cols-2">
+      <section className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <div className={`${cardClass}`}>
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-medium">Choice-AI</h2>
@@ -151,6 +162,20 @@ export function Dashboard() {
           <div className="mt-4 flex gap-3 flex-wrap">
             <button disabled={isRunning} onClick={() => runTest('opticall')} className="rounded-lg bg-gradient-to-r from-sky-500 to-violet-500 px-4 py-2 text-sm font-medium text-white shadow hover:opacity-90 disabled:opacity-50">Run Test</button>
             <button onClick={() => fetchHistory('opticall')} className="rounded-lg px-4 py-2 text-sm font-medium text-violet-300 ring-1 ring-white/10 hover:bg-white/5">View Past Tests</button>
+          </div>
+        </div>
+
+        <div className={`${cardClass}`}>
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-medium">Nyaay AI</h2>
+            <span className="inline-flex items-center rounded-full px-3 py-1 text-sm ring-1 ring-white/10 bg-gradient-to-r from-orange-500/10 to-rose-500/10 text-orange-200">
+              API
+            </span>
+          </div>
+          <p className="mt-2 text-sm text-slate-300">Run end-to-end legal AI tests and view execution logs.</p>
+          <div className="mt-4 flex gap-3 flex-wrap">
+            <button disabled={isRunning} onClick={() => runTest('nyaay-ai')} className="rounded-lg bg-gradient-to-r from-orange-500 to-rose-500 px-4 py-2 text-sm font-medium text-white shadow hover:opacity-90 disabled:opacity-50">Run Test</button>
+            <button onClick={() => fetchHistory('nyaay-ai')} className="rounded-lg px-4 py-2 text-sm font-medium text-orange-300 ring-1 ring-white/10 hover:bg-white/5">View Past Tests</button>
           </div>
         </div>
       </section>
