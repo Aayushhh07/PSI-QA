@@ -12,6 +12,7 @@ import { websiteRoutes } from './routes/websiteRoutes';
 import { reportRoutes } from './routes/reportRoutes';
 import choiceAiRoutes from './routes/choiceAiRoutes';
 import opticallRoutes from './routes/opticallRoutes';
+import nyaayAiRoutes from './routes/nyaayAiRoutes';
 import { connectToMongo } from './db/mongo';
 import cron from 'node-cron';
 import { ChoiceAiController } from './controllers/choiceAiController';
@@ -93,6 +94,7 @@ app.use('/api/websites', websiteRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/choice-ai', choiceAiRoutes);
 app.use('/api/opticall', opticallRoutes);
+app.use('/api/nyaay-ai', nyaayAiRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
