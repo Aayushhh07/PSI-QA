@@ -98,7 +98,6 @@ LOG_FILE_PATH=./logs
 # DB_NAME=testing_app
 
 # MONGODB_URI=mongodb://localhost:27017/qa_testing
-MONGODB_URI=mongodb+srv://vishwakarmaaayush22:3yRzHeFGcVwkf0vM@cluster0.qesey.mongodb.net/qa_testing
 
 ENABLE_DAILY_CRON=true
 DAILY_CRON="0 3 * * *"
@@ -117,13 +116,7 @@ TEST_RESULTS_PATH=./test-results
 SCREENSHOT_PATH=./screenshots
 VIDEO_PATH=./videos 
 
-# Choice-AI Website Credentials
-CHOICE_UID=admin
-CHOICE_PASS=Y4h0R@NKL1$aH3&
 
-# Opticall Website Credentials
-OPTICALL_EMAIL=ce@opticall.io
-OPTICALL_PASSWORD="DishD2h#6"
 ```
 Run the backend:
 ```bash
